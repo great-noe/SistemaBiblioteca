@@ -7,7 +7,7 @@ Los diagramas han sido diseñados siguiendo la arquitectura en **N-Capas** del p
 ## 🛠 Herramientas Utilizadas
 * **Lenguaje de Modelado:** UML 2.0
 * **Motor de Renderizado:** Mermaid.js
-* **Arquitectura:** Capas (.NET 10.0 + MySQL)
+* **Arquitectura:** Capas (.NET 6.0 + MySQL)
 
 ---
 
@@ -15,8 +15,7 @@ Los diagramas han sido diseñados siguiendo la arquitectura en **N-Capas** del p
 
 Este diagrama modela la interacción necesaria para otorgar un libro a un usuario. El sistema debe garantizar la integridad de los datos antes de confirmar la transacción.
 
-![Diagrama de Secuencia - Préstamo](assets/diagrama%20de%20secuencia%20-%20%20registro%20de%20prestamo.png)
-*(Asegúrate de que la ruta de la imagen coincida con la carpeta donde la subiste en GitHub)*
+![Diagrama de Secuencia - Préstamo](diagrama%20de%20secuencia%20-%20%20registro%20de%20prestamo.png)
 
 ### 🔍 Lógica del Flujo
 1.  **Solicitud:** El bibliotecario inicia el proceso con el `IdUsuario` y `IdLibro`.
@@ -33,8 +32,7 @@ Este diagrama modela la interacción necesaria para otorgar un libro a un usuari
 
 Este proceso es más complejo ya que involucra lógica condicional para el cálculo automático de sanciones monetarias en caso de retraso.
 
-![Diagrama de Secuencia - Devolución](assets/diagrama%20de%20secuencia%20-%20%20prestamo%20o%20devolucion.png)
-*(Asegúrate de que la ruta de la imagen coincida con la carpeta donde la subiste en GitHub)*
+![Diagrama de Secuencia - Devolución](diagrama%20de%20secuencia%20-%20%20prestamo%20o%20devolucion.png)
 
 ### 🔍 Lógica del Flujo
 1.  **Recuperación de Contexto:** Al ingresar el `IdPrestamo`, el sistema recupera toda la información vinculada (Libro y Usuario) mediante un `JOIN`.
