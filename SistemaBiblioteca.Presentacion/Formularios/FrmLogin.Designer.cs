@@ -151,6 +151,19 @@
             guna2Panel1.ResumeLayout(false);
             guna2Panel1.PerformLayout();
             ResumeLayout(false);
+            // 
+            // ControlBox Cerrar
+            // 
+            Guna.UI2.WinForms.Guna2ControlBox controlBoxCerrar = new Guna.UI2.WinForms.Guna2ControlBox();
+            controlBoxCerrar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            controlBoxCerrar.FillColor = Color.Transparent; // Se mezcla con el fondo
+            controlBoxCerrar.HoverState.FillColor = Color.FromArgb(231, 76, 60); // Se pone rojo al pasar el mouse
+            controlBoxCerrar.HoverState.IconColor = Color.White;
+            controlBoxCerrar.IconColor = Color.Gray;
+            controlBoxCerrar.Location = new Point(760, 10); // Ajusta según el tamaño de tu form
+            controlBoxCerrar.Name = "controlBoxCerrar";
+            controlBoxCerrar.Size = new Size(30, 30);
+            this.Controls.Add(controlBoxCerrar);
         }
 
         #endregion
