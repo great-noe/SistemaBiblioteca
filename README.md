@@ -45,7 +45,7 @@ SistemaBiblioteca/
 │   │   └── BibliotecaContext.cs               # Configuración de Entity Framework
 │   │
 │   ├── Repositorios/                          # Consultas directas a BD (CRUD)
-│   │   ├── IRepositorio.cs                    # Interfaz genérica (opcional)
+│   │   ├── IRepositorio.cs                    
 │   │   ├── AutorRepository.cs
 │   │   ├── LibroRepository.cs
 │   │   ├── UsuarioRepository.cs
@@ -57,7 +57,7 @@ SistemaBiblioteca/
 │       └── ConnectionManager.cs
 │
 ├── SistemaBiblioteca.LogicaNegocio/           # BLL (Business Logic Layer)
-│   ├── DTOs/                                  # Data Transfer Objects (Vista simplificada)
+│   ├── DTOs/                                  # Data Transfer Objects 
 │   │   ├── AutorDto.cs
 │   │   ├── LibroDto.cs
 │   │   ├── LibroAutorDto.cs
