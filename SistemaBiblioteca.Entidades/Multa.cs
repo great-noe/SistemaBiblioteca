@@ -37,7 +37,6 @@ namespace SistemaBiblioteca.Entidades
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string Motivo { get; set; } = string.Empty;
-        // Opciones: Retraso, Daño, Pérdida, Renovación excesiva, Otro
 
         [MaxLength(500)]
         public string? Descripcion { get; set; }
@@ -46,7 +45,7 @@ namespace SistemaBiblioteca.Entidades
 
         public DateTime FechaVencimiento 
         { 
-            get => FechaGeneracion.AddDays(30); // 30 días para pagar
+            get => FechaGeneracion.AddDays(30);
             set { }
         }
 
@@ -56,7 +55,6 @@ namespace SistemaBiblioteca.Entidades
         [MaxLength(20)]
         [Column(TypeName = "varchar(20)")]
         public string Estado { get; set; } = "Pendiente";
-        // Opciones: Pendiente, Pagada, ParcialmentePagada, Cancelada, EnProceso
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal MontoPagado { get; set; } = 0;
@@ -72,7 +70,7 @@ namespace SistemaBiblioteca.Entidades
 
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
-        public string? TipoSancion { get; set; } // "Leve", "Moderada", "Grave"
+        public string? TipoSancion { get; set; }
 
         public bool BloqueoUsuario { get; set; } = false;
 

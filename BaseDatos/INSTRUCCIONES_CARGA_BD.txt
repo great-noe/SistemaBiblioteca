@@ -1,0 +1,354 @@
+═══════════════════════════════════════════════════════════════════════════════
+  INSTRUCCIONES PARA CARGAR BASE DE DATOS v7 EN MYSQL
+═══════════════════════════════════════════════════════════════════════════════
+
+Esta guía te mostrará cómo crear la base de datos COMPLETA desde cero con todas
+las actualizaciones de la versión 7.
+
+═══════════════════════════════════════════════════════════════════════════════
+📋 ARCHIVOS INCLUIDOS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. 01_CREAR_BD_COMPLETA_v7.sql
+   └─ Crea base de datos, tablas, índices y vistas
+   └─ Incluye TODOS los campos v7 (NotificacionEnviada, EstadoFisico, etc.)
+   └─ Ejecutar PRIMERO
+
+2. 02_DATOS_PRUEBA_v7.sql
+   └─ Inserta datos de prueba (categorías, autores, libros, usuarios, préstamos)
+   └─ Opcional: útil para testing
+   └─ Ejecutar DESPUÉS del script 1
+
+3. INSTRUCCIONES_CARGA_BD.txt
+   └─ Este archivo (instrucciones)
+
+═══════════════════════════════════════════════════════════════════════════════
+⚠️ IMPORTANTE ANTES DE EMPEZAR
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️  ADVERTENCIA: El script ELIMINARÁ la base de datos "bibliotecadb" si existe.
+    Si tienes datos importantes, haz un BACKUP primero.
+
+    Para hacer backup:
+    mysqldump -u root -p bibliotecadb > backup_antes_v7.sql
+
+═══════════════════════════════════════════════════════════════════════════════
+MÉTODO 1: MYSQL WORKBENCH (RECOMENDADO - MÁS FÁCIL)
+═══════════════════════════════════════════════════════════════════════════════
+
+PASO 1: Abrir MySQL Workbench
+────────────────────────────
+   • Doble click en el icono de MySQL Workbench
+   • Conectar a tu servidor local (localhost)
+   • Ingresar tu contraseña
+
+PASO 2: Abrir el primer script
+────────────────────────────────
+   • Menu: File → Open SQL Script
+   • Navegar a: SistemaBiblioteca-v7/BaseDatos/
+   • Seleccionar: 01_CREAR_BD_COMPLETA_v7.sql
+   • Click en "Open"
+
+PASO 3: Ejecutar el script
+────────────────────────────
+   • Click en el icono del rayo ⚡ (Execute)
+   • O presionar: Ctrl + Shift + Enter (Windows/Linux)
+   • O presionar: Cmd + Shift + Enter (Mac)
+
+PASO 4: Verificar resultado
+────────────────────────────
+   • Debe aparecer: "✅ BASE DE DATOS CREADA EXITOSAMENTE - VERSIÓN 7.0"
+   • En la pestaña "Output" debe mostrar:
+     - Lista de tablas creadas (10 tablas)
+     - Estructura de tabla prestamos (con campos v7)
+     - Estructura de tabla libros (con EstadoFisico)
+   • Si hay errores en rojo, leer la sección "Solución de Problemas"
+
+PASO 5: Cargar datos de prueba (OPCIONAL)
+──────────────────────────────────────────
+   • Menu: File → Open SQL Script
+   • Seleccionar: 02_DATOS_PRUEBA_v7.sql
+   • Click en ⚡ Execute
+   • Debe aparecer: "✅ DATOS DE PRUEBA INSERTADOS EXITOSAMENTE"
+
+PASO 6: Verificar que todo funciona
+────────────────────────────────────
+   • En el panel izquierdo, click en el icono de refresh 🔄
+   • Expandir "bibliotecadb" → "Tables"
+   • Debes ver 10 tablas:
+     ✓ autores
+     ✓ categorias
+     ✓ historial_prestamo
+     ✓ libro_autor
+     ✓ libros
+     ✓ multas
+     ✓ prestamos
+     ✓ reservas
+     ✓ usuarios
+   
+   • Click derecho en "prestamos" → "Select Rows - Limit 1000"
+   • Verificar que existen las columnas:
+     - NotificacionEnviada
+     - EstadoLibroDevuelto
+     - ObservacionesEstado
+
+═══════════════════════════════════════════════════════════════════════════════
+MÉTODO 2: LÍNEA DE COMANDOS MYSQL
+═══════════════════════════════════════════════════════════════════════════════
+
+PASO 1: Abrir terminal/CMD
+───────────────────────────
+   Windows: Win + R → escribir "cmd" → Enter
+   Linux/Mac: Abrir Terminal
+
+PASO 2: Navegar a la carpeta BaseDatos
+───────────────────────────────────────
+   cd "ruta\completa\a\SistemaBiblioteca-v7\BaseDatos"
+   
+   Ejemplo Windows:
+   cd "C:\Users\TuUsuario\Desktop\SistemaBiblioteca-v7\BaseDatos"
+   
+   Ejemplo Linux/Mac:
+   cd "/home/usuario/SistemaBiblioteca-v7/BaseDatos"
+
+PASO 3: Ejecutar el primer script
+──────────────────────────────────
+   mysql -u root -p < 01_CREAR_BD_COMPLETA_v7.sql
+   
+   • Te pedirá la contraseña de MySQL
+   • Ingresar contraseña y presionar Enter
+   • Esperar a que termine (unos segundos)
+
+PASO 4: Cargar datos de prueba (OPCIONAL)
+──────────────────────────────────────────
+   mysql -u root -p < 02_DATOS_PRUEBA_v7.sql
+   
+   • Ingresar contraseña nuevamente
+   • Esperar a que termine
+
+PASO 5: Verificar que funciona
+───────────────────────────────
+   mysql -u root -p
+   [Ingresar contraseña]
+   
+   USE bibliotecadb;
+   SHOW TABLES;
+   DESCRIBE prestamos;
+   DESCRIBE libros;
+   
+   SELECT * FROM prestamos LIMIT 5;
+   SELECT * FROM libros LIMIT 5;
+
+═══════════════════════════════════════════════════════════════════════════════
+MÉTODO 3: COPIAR Y PEGAR (ÚLTIMA OPCIÓN)
+═══════════════════════════════════════════════════════════════════════════════
+
+Si los métodos anteriores fallan:
+
+PASO 1: Abrir el archivo SQL
+────────────────────────────
+   • Click derecho en: 01_CREAR_BD_COMPLETA_v7.sql
+   • Abrir con: Notepad++ / Visual Studio Code / Bloc de notas
+
+PASO 2: Copiar TODO el contenido
+─────────────────────────────────
+   • Ctrl + A (seleccionar todo)
+   • Ctrl + C (copiar)
+
+PASO 3: Abrir MySQL Workbench
+──────────────────────────────
+   • Conectar a tu servidor
+   • Click en el área de Query (la ventana grande de código)
+
+PASO 4: Pegar y ejecutar
+─────────────────────────
+   • Ctrl + V (pegar)
+   • Click en ⚡ Execute
+   • Esperar resultado
+
+PASO 5: Repetir para datos de prueba
+─────────────────────────────────────
+   • Abrir 02_DATOS_PRUEBA_v7.sql
+   • Copiar todo
+   • Pegar en MySQL Workbench
+   • Ejecutar
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ VERIFICACIÓN FINAL - CONFIRMAR QUE TODO ESTÁ OK
+═══════════════════════════════════════════════════════════════════════════════
+
+Ejecutar estas consultas en MySQL Workbench:
+
+1. Ver todas las tablas
+   ────────────────────
+   USE bibliotecadb;
+   SHOW TABLES;
+   
+   Resultado esperado: 10 tablas
+
+2. Verificar campos v7 en PRESTAMOS
+   ─────────────────────────────────
+   DESCRIBE prestamos;
+   
+   Debe mostrar:
+   - NotificacionEnviada (tinyint)
+   - EstadoLibroDevuelto (varchar)
+   - ObservacionesEstado (varchar)
+
+3. Verificar campo v7 en LIBROS
+   ────────────────────────────
+   DESCRIBE libros;
+   
+   Debe mostrar:
+   - EstadoFisico (varchar)
+
+4. Ver datos de prueba (si los cargaste)
+   ──────────────────────────────────────
+   SELECT COUNT(*) FROM libros;          -- Debe mostrar: 10
+   SELECT COUNT(*) FROM usuarios;        -- Debe mostrar: 8
+   SELECT COUNT(*) FROM prestamos;       -- Debe mostrar: 7
+   
+5. Ver préstamos con campos v7
+   ───────────────────────────
+   SELECT 
+       IdPrestamo,
+       EstadoPrestamo,
+       NotificacionEnviada,
+       EstadoLibroDevuelto
+   FROM prestamos;
+   
+   Debe mostrar datos sin errores
+
+═══════════════════════════════════════════════════════════════════════════════
+🐛 SOLUCIÓN DE PROBLEMAS COMUNES
+═══════════════════════════════════════════════════════════════════════════════
+
+ERROR: "Access denied for user 'root'@'localhost'"
+──────────────────────────────────────────────────
+CAUSA: Contraseña incorrecta o usuario sin permisos
+SOLUCIÓN:
+   • Verificar contraseña de MySQL
+   • Intentar con otro usuario que tenga permisos CREATE DATABASE
+   • Restablecer contraseña de root si es necesario
+
+ERROR: "Unknown database 'bibliotecadb'"
+────────────────────────────────────────
+CAUSA: El script no creó la base de datos
+SOLUCIÓN:
+   • Ejecutar manualmente: CREATE DATABASE bibliotecadb;
+   • Volver a ejecutar el script completo
+
+ERROR: "Can't drop database 'bibliotecadb'; database doesn't exist"
+───────────────────────────────────────────────────────────────────
+CAUSA: Es un WARNING, no un error
+SOLUCIÓN:
+   • Ignorar este mensaje (es normal si es primera vez)
+   • Continuar con el resto del script
+
+ERROR: "Table 'prestamos' already exists"
+─────────────────────────────────────────
+CAUSA: Ya ejecutaste el script antes
+SOLUCIÓN:
+   Opción A (ELIMINAR TODO Y EMPEZAR DE NUEVO):
+      DROP DATABASE bibliotecadb;
+      [Volver a ejecutar el script]
+   
+   Opción B (CONSERVAR DATOS):
+      No ejecutar el script de nuevo, ya tienes la BD v7
+
+ERROR: Character set problems / caracteres raros (¿, ñ, acentos)
+────────────────────────────────────────────────────────────────
+CAUSA: Problema de codificación UTF-8
+SOLUCIÓN:
+   • En MySQL Workbench: Edit → Preferences → SQL Editor
+   • Cambiar a: UTF-8 Unicode (utf8mb4)
+   • Reconectar y volver a ejecutar
+
+ERROR: "Commands out of sync"
+─────────────────────────────
+CAUSA: Error de conexión o script muy largo
+SOLUCIÓN:
+   • Cerrar y volver a abrir MySQL Workbench
+   • Reconectar al servidor
+   • Ejecutar el script por partes (copiar secciones)
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 ¿QUÉ HACE CADA SCRIPT?
+═══════════════════════════════════════════════════════════════════════════════
+
+01_CREAR_BD_COMPLETA_v7.sql
+───────────────────────────
+✓ Elimina base de datos anterior (si existe)
+✓ Crea base de datos "bibliotecadb"
+✓ Crea 10 tablas con todas las relaciones
+✓ Agrega campos v7:
+  • NotificacionEnviada en prestamos
+  • EstadoLibroDevuelto en prestamos
+  • ObservacionesEstado en prestamos
+  • EstadoFisico en libros
+✓ Crea índices para mejorar rendimiento
+✓ Crea vistas útiles
+✓ Muestra verificación final
+
+02_DATOS_PRUEBA_v7.sql
+──────────────────────
+✓ Inserta 8 categorías
+✓ Inserta 10 autores
+✓ Inserta 10 libros (con diferentes estados físicos)
+✓ Relaciona libros con autores
+✓ Inserta 8 usuarios
+✓ Inserta 7 préstamos (3 activos, 4 devueltos)
+✓ Muestra ejemplos de todos los campos v7
+✓ Inserta 2 reservas
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 SIGUIENTE PASO DESPUÉS DE CARGAR LA BD
+═══════════════════════════════════════════════════════════════════════════════
+
+Una vez que la base de datos está creada y verificada:
+
+1. ✅ Abrir Visual Studio
+2. ✅ Abrir solución: SistemaBiblioteca-v7/SistemaBiblioteca.sln
+3. ✅ Verificar cadena de conexión en DatabaseConfig.cs
+4. ✅ Compilar proyecto (Ctrl + Shift + B)
+5. ✅ Ejecutar proyecto de pruebas: SistemaBiblioteca.PruebasConsola
+6. ✅ Probar funcionalidades:
+   - Registrar usuario (con validaciones v7)
+   - Registrar préstamo
+   - Registrar devolución (con estado del libro)
+   - Verificar que se guarda en BD
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 NOTAS IMPORTANTES
+═══════════════════════════════════════════════════════════════════════════════
+
+• La base de datos se llama "bibliotecadb" (puedes cambiar el nombre si quieres)
+• Usuario por defecto: root (puedes usar otro usuario con permisos)
+• El script es compatible con MySQL 5.7 y superiores
+• Se recomienda hacer BACKUP antes de ejecutar si tienes datos importantes
+• Los scripts son seguros y probados
+• Puedes ejecutarlos múltiples veces (elimina y recrea todo)
+
+═══════════════════════════════════════════════════════════════════════════════
+💡 CONSEJOS
+═══════════════════════════════════════════════════════════════════════════════
+
+• Si es tu primera vez, usa MySQL Workbench (Método 1)
+• Los datos de prueba te ayudan a hacer testing rápido
+• Puedes ver las vistas creadas para consultas rápidas
+• Los índices mejoran el rendimiento en tablas grandes
+• Usa las vistas para reportes y consultas complejas
+
+═══════════════════════════════════════════════════════════════════════════════
+❓ ¿NECESITAS MÁS AYUDA?
+═══════════════════════════════════════════════════════════════════════════════
+
+Si tienes problemas:
+1. Lee la sección "Solución de Problemas"
+2. Copia el mensaje de error EXACTO
+3. Verifica tu versión de MySQL: SELECT VERSION();
+4. Verifica permisos del usuario
+
+═══════════════════════════════════════════════════════════════════════════════
+FIN DE LAS INSTRUCCIONES
+═══════════════════════════════════════════════════════════════════════════════

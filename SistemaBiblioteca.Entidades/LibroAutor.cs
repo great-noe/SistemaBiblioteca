@@ -18,11 +18,10 @@ namespace SistemaBiblioteca.Entidades
         [ForeignKey("IdAutor")]
         public virtual Autor? Autor { get; set; }
 
-        // Propiedades adicionales para la relación
         [MaxLength(50)]
-        public string? Rol { get; set; } // "Autor", "Coautor", "Editor", etc.
+        public string? Rol { get; set; }
 
-        public int? OrdenFirma { get; set; } // Orden de firma en portada (1, 2, 3...)
+        public int? OrdenFirma { get; set; }
 
         [MaxLength(500)]
         public string? Notas { get; set; }

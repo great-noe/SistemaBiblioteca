@@ -33,10 +33,9 @@ namespace SistemaBiblioteca.Entidades
 
         public DateTime? FechaNacimiento { get; set; }
 
-        // Mapeamos el ENUM de MySQL como string para evitar errores simples
         [Required]
         [MaxLength(50)]
-        public string TipoUsuario { get; set; } = "Socio"; // Administrativo, Socio, Visita
+        public string TipoUsuario { get; set; } = "Socio";
 
         public decimal MultasPendientes { get; set; } = 0;
         

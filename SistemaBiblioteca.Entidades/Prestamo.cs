@@ -24,7 +24,7 @@ namespace SistemaBiblioteca.Entidades
 
         [Required]
         [MaxLength(20)]
-        public string EstadoPrestamo { get; set; } = "Activo"; // Activo, Devuelto, Vencido
+        public string EstadoPrestamo { get; set; } = "Activo";
 
         public int DiasRetraso { get; set; } = 0;
         public decimal MontoMulta { get; set; } = 0;
@@ -32,5 +32,15 @@ namespace SistemaBiblioteca.Entidades
 
         [MaxLength(500)]
         public string? Observaciones { get; set; }
+
+        // Campo para registrar notificación al usuario (reemplaza envío de correo)
+        public bool NotificacionEnviada { get; set; } = false;
+
+        // Campos para registrar estado del libro en devolución
+        [MaxLength(20)]
+        public string? EstadoLibroDevuelto { get; set; }
+
+        [MaxLength(500)]
+        public string? ObservacionesEstado { get; set; }
     }
 }

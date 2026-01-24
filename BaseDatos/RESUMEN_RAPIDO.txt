@@ -1,0 +1,66 @@
+═══════════════════════════════════════════════════════════════════════════════
+  RESUMEN RÁPIDO - BASE DE DATOS v7
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 OBJETIVO:
+   Crear base de datos COMPLETA desde cero con todas las actualizaciones v7
+
+📦 ARCHIVOS:
+   1. 01_CREAR_BD_COMPLETA_v7.sql  ← EJECUTAR PRIMERO
+   2. 02_DATOS_PRUEBA_v7.sql       ← EJECUTAR SEGUNDO (opcional)
+   3. INSTRUCCIONES_CARGA_BD.txt   ← Guía detallada
+   4. README.md                     ← Referencia rápida
+
+═══════════════════════════════════════════════════════════════════════════════
+⚡ EJECUTAR EN 30 SEGUNDOS
+═══════════════════════════════════════════════════════════════════════════════
+
+MYSQL WORKBENCH:
+  1. Abrir MySQL Workbench
+  2. File → Open SQL Script → 01_CREAR_BD_COMPLETA_v7.sql
+  3. Click ⚡ Execute
+  4. Ver mensaje: "✅ BASE DE DATOS CREADA EXITOSAMENTE"
+
+LÍNEA DE COMANDOS:
+  cd SistemaBiblioteca-v7/BaseDatos
+  mysql -u root -p < 01_CREAR_BD_COMPLETA_v7.sql
+  mysql -u root -p < 02_DATOS_PRUEBA_v7.sql
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ VERIFICAR QUE FUNCIONÓ
+═══════════════════════════════════════════════════════════════════════════════
+
+USE bibliotecadb;
+SHOW TABLES;                    -- Debe mostrar 10 tablas
+DESCRIBE prestamos;             -- Ver campos v7
+SELECT COUNT(*) FROM libros;    -- Debe mostrar 10 (si cargaste datos)
+
+═══════════════════════════════════════════════════════════════════════════════
+🆕 CAMPOS NUEVOS v7
+═══════════════════════════════════════════════════════════════════════════════
+
+TABLA PRESTAMOS:
+  • NotificacionEnviada (bit)          - Notificación al usuario
+  • EstadoLibroDevuelto (varchar)      - Estado al devolverse
+  • ObservacionesEstado (varchar)      - Detalles de daños
+
+TABLA LIBROS:
+  • EstadoFisico (varchar)             - Estado actual del libro
+
+═══════════════════════════════════════════════════════════════════════════════
+⚠️ IMPORTANTE
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️ El script ELIMINA la base de datos "bibliotecadb" si existe
+⚠️ Haz BACKUP antes si tienes datos importantes:
+   mysqldump -u root -p bibliotecadb > backup.sql
+
+═══════════════════════════════════════════════════════════════════════════════
+📖 MÁS INFORMACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+Para instrucciones detalladas, ver:
+• INSTRUCCIONES_CARGA_BD.txt  (Guía completa paso a paso)
+• README.md                    (Documentación técnica)
+
+═══════════════════════════════════════════════════════════════════════════════

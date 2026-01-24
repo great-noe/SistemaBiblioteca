@@ -29,15 +29,14 @@ namespace SistemaBiblioteca.Entidades
 
         public DateTime FechaExpiracion 
         { 
-            get => FechaReserva.AddDays(5); // 5 días por defecto
-            set { } // Para EF Core
+            get => FechaReserva.AddDays(5);
+            set { }
         }
 
         [Required]
         [MaxLength(20)]
         [Column(TypeName = "varchar(20)")]
-        public string Estado { get; set; } = "Pendiente"; 
-        // Opciones: Pendiente, Confirmada, Cumplida, Cancelada, Expirada
+        public string Estado { get; set; } = "Pendiente";
 
         public int? IdPrestamo { get; set; }
         
@@ -46,9 +45,9 @@ namespace SistemaBiblioteca.Entidades
 
         [MaxLength(10)]
         [Column(TypeName = "varchar(10)")]
-        public string? Prioridad { get; set; } // "Alta", "Media", "Baja"
+        public string? Prioridad { get; set; }
 
-        public int? PosicionCola { get; set; } // Posición en la cola de reservas
+        public int? PosicionCola { get; set; }
 
         public DateTime? FechaNotificacion { get; set; }
 

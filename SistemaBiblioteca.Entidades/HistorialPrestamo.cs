@@ -21,7 +21,6 @@ namespace SistemaBiblioteca.Entidades
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string Accion { get; set; } = string.Empty;
-        // Opciones: Creacion, Devolucion, Renovacion, Vencimiento, Cancelacion, Modificacion
 
         [MaxLength(200)]
         public string? DescripcionAccion { get; set; }
@@ -33,7 +32,6 @@ namespace SistemaBiblioteca.Entidades
         [MaxLength(100)]
         public string UsuarioResponsable { get; set; } = "Sistema";
 
-        // Detalles del préstamo en ese momento (snapshot)
         public int? IdUsuario { get; set; }
         
         public int? IdLibro { get; set; }
@@ -50,14 +48,12 @@ namespace SistemaBiblioteca.Entidades
         
         public DateTime? FechaDevolucionRealAnterior { get; set; }
 
-        // Cambios específicos
         public int? DiasPrestamo { get; set; }
         
         public int? DiasRenovacion { get; set; }
         
         public int? VecesRenovado { get; set; }
 
-        // Información del dispositivo/sesión
         [MaxLength(50)]
         public string? IpRegistro { get; set; }
         
@@ -67,7 +63,6 @@ namespace SistemaBiblioteca.Entidades
         [MaxLength(100)]
         public string? SistemaOperativo { get; set; }
 
-        // Relación con multa si aplica
         public int? IdMulta { get; set; }
         
         [ForeignKey("IdMulta")]
@@ -76,13 +71,11 @@ namespace SistemaBiblioteca.Entidades
         [MaxLength(500)]
         public string? Observaciones { get; set; }
 
-        // Para auditoría
         [MaxLength(50)]
-        public string? TipoCambio { get; set; } // "Automatico", "Manual", "Sistema"
+        public string? TipoCambio { get; set; }
 
         public bool EsAutomatico { get; set; } = false;
 
-        // Campos para cambios específicos
         [MaxLength(200)]
         public string? CampoModificado { get; set; }
         
