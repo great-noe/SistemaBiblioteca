@@ -21,10 +21,15 @@ Sistema de gestión bibliotecaria diseñado para administrar el flujo de présta
 3. Gestión de Préstamos
 4. Gestión de Reservas
 5. Gestión de Multas
-## Estructura del proyecto
+
+# Estructura del Proyecto
+
+Esta estructura sigue una arquitectura en N-Capas, separando claramente las responsabilidades de Acceso a Datos (DAL), Lógica de Negocio (BLL) y Presentación (UI).
+
+```text
 SistemaBiblioteca/
 │
-├── SistemaBiblioteca.Entidades/          # Modelos del dominio (tablas)
+├── SistemaBiblioteca.Entidades/               # Modelos del dominio (Mapeo a Base de Datos)
 │   ├── Autor.cs
 │   ├── Libro.cs
 │   ├── LibroAutor.cs
@@ -35,12 +40,12 @@ SistemaBiblioteca/
 │   ├── Multa.cs
 │   └── HistorialPrestamo.cs
 │
-├── SistemaBiblioteca.AccesoDatos/         # DAL (Data Access Layer)
+├── SistemaBiblioteca.AccesoDatos/             # DAL (Data Access Layer)
 │   ├── Contexto/
-│   │   └── BibliotecaContext.cs
+│   │   └── BibliotecaContext.cs               # Configuración de Entity Framework
 │   │
-│   ├── Repositorios/                      # consultas (CRUD)
-│   │   ├── IRepositorio.cs
+│   ├── Repositorios/                          # Consultas directas a BD (CRUD)
+│   │   ├── IRepositorio.cs                    # Interfaz genérica (opcional)
 │   │   ├── AutorRepository.cs
 │   │   ├── LibroRepository.cs
 │   │   ├── UsuarioRepository.cs
@@ -51,8 +56,19 @@ SistemaBiblioteca/
 │   └── Configuracion/
 │       └── ConnectionManager.cs
 │
-├── SistemaBiblioteca.LogicaNegocio/       # Reglas de negocio
-│   ├── Servicios/
+├── SistemaBiblioteca.LogicaNegocio/           # BLL (Business Logic Layer)
+│   ├── DTOs/                                  # Data Transfer Objects (Vista simplificada)
+│   │   ├── AutorDto.cs
+│   │   ├── LibroDto.cs
+│   │   ├── LibroAutorDto.cs
+│   │   ├── CategoriaDto.cs
+│   │   ├── UsuarioDto.cs
+│   │   ├── PrestamoDto.cs
+│   │   ├── ReservaDto.cs
+│   │   ├── MultaDto.cs
+│   │   └── HistorialPrestamoDto.cs
+│   │
+│   ├── Servicios/                             # Lógica y transformación de datos
 │   │   ├── AutorService.cs
 │   │   ├── LibroService.cs
 │   │   ├── PrestamoService.cs
@@ -60,22 +76,12 @@ SistemaBiblioteca/
 │   │   ├── MultaService.cs
 │   │   └── UsuarioService.cs
 │   │
-│   └── Validaciones/
-│   │   ├── PrestamoValidador.cs
-│   │   ├── ReservaValidador.cs
-│   │   └── UsuarioValidador.cs
-|   └── DTOs/   
-│       ├── AutorDto.cs
-│       ├── LibroDto.cs
-│       ├── LibroAutorDto.cs
-│       ├── CategoriaDto.cs
-│       ├── UsuarioDto.cs
-│       ├── PrestamoDto.cs
-│       ├── ReservaDto.cs
-│       ├── MultaDto.cs
-│       └── HistorialPrestamoDto.cs
+│   └── Validaciones/                          # Reglas de validación previas
+│       ├── PrestamoValidador.cs
+│       ├── ReservaValidador.cs
+│       └── UsuarioValidador.cs
 │
-├── SistemaBiblioteca.Presentacion/        # Windows Forms
+├── SistemaBiblioteca.Presentacion/            # UI (Windows Forms)
 │   ├── Formularios/
 │   │   ├── FrmLogin.cs
 │   │   ├── FrmPrincipal.cs
@@ -86,7 +92,7 @@ SistemaBiblioteca/
 │   │   ├── FrmReservas.cs
 │   │   └── FrmMultas.cs
 │   │
-│   ├── Controles/
-│   └── Utilidades/
+│   ├── Controles/                             # UserControls personalizados
+│   └── Utilidades/                            # Helpers de UI (ej. alertas, estilos)
 │
-└── SistemaBiblioteca.sln
+└── SistemaBiblioteca.sln                      # Archivo de solución
